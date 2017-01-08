@@ -8,14 +8,22 @@ public final class Pipelife {
     private static final String CONFIG_TRELLO_TOKEN = "trello_token";
     private static final String CONFIG_EVERNOTE_TOKEN = "evernote_token";
 
+    private final String TRELLO_KEY;
+    private final String TRELLO_TOKEN;
+    private final String EVERNOTE_TOKEN;
+
     private final Parrot config;
 
     private Pipelife() {
         config = new Parrot();
         if (!isConfigValid()) {
             System.err.println("Invalid config");
-            System.exit(0);
+            System.exit(-1);
         }
+
+        TRELLO_KEY = config.get(CONFIG_TRELLO_KEY).orElseThrow(IllegalStateException::new);
+        TRELLO_TOKEN = config.get(CONFIG_TRELLO_TOKEN).orElseThrow(IllegalStateException::new);
+        EVERNOTE_TOKEN = config.get(CONFIG_EVERNOTE_TOKEN).orElseThrow(IllegalStateException::new);
     }
 
     private boolean isConfigValid() {
