@@ -16,6 +16,11 @@
       <name>bintray</name>
       <url>http://jcenter.bintray.com</url>
     </repository>
+      <repository>
+      <id>joelso-mvn-repo</id>
+      <name>joelso github mvn repo</name>
+      <url>https://raw.github.com/joelso/joelso-mvn-repo/master/snapshots/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -24,6 +29,12 @@
       <artifactId>evernote-api</artifactId>
       <version>1.25.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.trello4j</groupId>
+      <artifactId>trello4j</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
     <dependency>
       <groupId>com.github.rskupnik</groupId>
       <artifactId>parrot</artifactId>
