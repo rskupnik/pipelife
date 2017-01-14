@@ -14,8 +14,14 @@ import com.evernote.edam.type.NoteSortOrder;
 import com.evernote.edam.type.Notebook;
 import com.evernote.thrift.TException;
 import com.github.rskupnik.parrot.Parrot;
+import org.codehaus.jackson.map.ObjectMapper;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Pipelife {
 
@@ -32,6 +38,7 @@ public final class Pipelife {
     private final Parrot config;
     private UserStoreClient userStore;
     private NoteStoreClient noteStore;
+    private Map<String, String> patterns = new HashMap<>();
 
     private Pipelife() {
         config = new Parrot();
@@ -46,6 +53,14 @@ public final class Pipelife {
         INPUT_NOTEBOOK = config.get(CONFIG_INPUT_NOTEBOOK).orElseThrow(IllegalStateException::new);
 
         try {
+            // Read and parse the patterns.json file
+            readActions();
+
+            System.out.println("Patterns:");
+            for (Map.Entry<String, String> entry : patterns.entrySet()) {
+                System.out.println(entry.getKey()+" : "+entry.getValue());
+            }
+
             initializeEvernote();
             List<Note> notes = getNotes();
             for (Note note : notes) {
@@ -97,6 +112,13 @@ public final class Pipelife {
         filter.setAscending(true);
 
         return noteStore.findNotes(filter, 0, 100).getNotes();
+    }
+
+    private void readActions() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        patterns = ((List<Pattern>) objectMapper.readValue(new File("patterns.json"), objectMapper.getTypeFactory().constructCollectionType(List.class, Pattern.class)))
+                .stream()
+                .collect(Collectors.toMap(Pattern::getTitle, Pattern::getAction));
     }
 
     private boolean isConfigValid() {
