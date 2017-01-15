@@ -1,0 +1,36 @@
+{
+  "config": [
+    {
+      "key": "EVERNOTE-TOKEN",
+      "value": ""
+    },
+    {
+      "key": "EVERNOTE-INPUT-NOTEBOOK",
+      "value": "Input buffer"
+    },
+    {
+      "key": "TRELLO-KEY",
+      "value": ""
+    },
+    {
+      "key": "TRELLO-TOKEN",
+      "value": ""
+    },
+    {
+      "key": "TRELLO-LIST",
+      "value": ""
+    }
+  ],
+  "actions": [
+    {
+      "id": "trello-todo",
+      "scope": "BUILT_IN"
+    }
+  ],
+  "handlers": [
+    {
+      "pattern": "todo",
+      "action": "trello-todo"
+    }
+  ]
+}
