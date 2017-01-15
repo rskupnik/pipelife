@@ -27,6 +27,10 @@ public final class Pipelife {
 
     private Pipelife() {
 
+        System.out.println("PIPELINE by Myzreal");
+        System.out.println("It might take ~20s to start processing the notes");
+        System.out.println();
+
         try {
             readConfig();
 
@@ -42,6 +46,9 @@ public final class Pipelife {
             for (Note note : notes) {
                 parseNote(note);
             }
+
+            System.out.println();
+            System.out.println("DONE! :)");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
@@ -84,16 +91,6 @@ public final class Pipelife {
             if (entry.getValue().getScope() == Action.ActionScope.BUILT_IN) {
                 processors.put(entry.getValue(), ProcessorFactory.fromAction(entry.getValue()).orElse(new DefaultProcessor()));
             }
-        }
-
-        for (Map.Entry<String, Action> entry : actions.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue().getId());
-        }
-        for (Map.Entry<String, Handler> entry : handlers.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue());
-        }
-        for (Map.Entry<Action, Processor> entry : processors.entrySet()) {
-            System.out.println(entry.getKey().getId()+": "+entry.getValue());
         }
     }
 
